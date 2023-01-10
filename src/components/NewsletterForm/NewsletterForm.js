@@ -9,14 +9,17 @@ import {
   Button,
   FormControl,
   FormLabel,
+  Flex,
   Input,
   Text,
   Stack,
+  useTheme
 } from '@chakra-ui/react';
 
 import isValidEmail from 'is-valid-email';
 
 const NewsletterForm = () => {
+  const theme = useTheme();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [emailIsDirty, setEmailIsDirty] = useState(false);
@@ -82,31 +85,35 @@ const NewsletterForm = () => {
       </Stack>
     );
   }
-
+// _hover={{ bgColor: `${theme.colors.green[400]}`}}
   return (
     <Stack>
-      <FormControl isRequired isInvalid={emailIsDirty && !emailIsValid}>
-        <FormLabel htmlFor="email">Email</FormLabel>
-        <Input
-          id="email"
-          type="email"
-          value={email}
-          onChange={handleEmailChange}
-          placeholder="joao@example.com"
-          background={'white'}
-        />
-      </FormControl>
-      <FormControl>
-        <FormLabel htmlFor="name">First Name</FormLabel>
-        <Input
-          id="name"
-          type="text"
-          value={name}
-          onChange={handleNameChange}
-          placeholder="João"
-          background={'white'}
-        />
-      </FormControl>
+      <Flex gap={4} wrap={['wrap', 'nowrap', 'nowrap']}>
+        <FormControl isRequired isInvalid={emailIsDirty && !emailIsValid}>
+          <FormLabel htmlFor="email">Email</FormLabel>
+          <Input
+            id="email"
+            type="email"
+            value={email}
+            onChange={handleEmailChange}
+            placeholder="joao@example.com"
+            background={'white'}
+            _focus={{ border: `2px solid ${theme.colors.green[500]}` }}
+          />
+        </FormControl>
+        <FormControl>
+          <FormLabel htmlFor="name">First Name</FormLabel>
+          <Input
+            id="name"
+            type="text"
+            value={name}
+            onChange={handleNameChange}
+            placeholder="João"
+            background={'white'}
+            _focus={{ border: `2px solid ${theme.colors.green[500]}` }}
+          />
+        </FormControl>
+      </Flex>
       <Button
         isDisabled={!emailIsValid}
         isLoading={isSubmitting}
@@ -118,6 +125,7 @@ const NewsletterForm = () => {
       >
         Subscribe
       </Button>
+
       {formResponse.status === 'ERROR' && (
         <Alert status="error">
           <AlertIcon />
